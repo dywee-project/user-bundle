@@ -1,0 +1,7 @@
+{# Dywee\UserBundle\Resources\View\User\roughList.html.twig #}
+
+<ul class="list-unstyled">
+    {%  for user in userList %}
+        <li>{{ user.firstName|capitalize }} {{ user.lastName|capitalize }} - Email: {{ user.professionalEmail }} - Tel: {{ user.mobile }}</li>
+    {% endfor %}
+</ul>

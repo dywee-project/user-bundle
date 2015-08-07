@@ -1,0 +1,13 @@
+{# Dywee\UserBundle\Resources\View\CMS\navside.html.twig #}
+
+<div class="row" id="panier">
+    <div class="col-md-12">
+        {% if app.user %}
+            <p><i class="fa fa-user"></i> {{ app.user.firstName }} {{ app.user.lastName }}</p>
+            <p><a href="#" class="btn btn-default btn-block btn-sm">Mon compte</a></p>
+            <p><small><a href="{{ path('logout') }}">Déconnexion</a></small></p>
+        {% else %}
+            <p>Veuillez vous connecter</p>
+        {% endif %}
+    </div>
+</div>

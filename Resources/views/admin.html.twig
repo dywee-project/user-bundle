@@ -1,0 +1,16 @@
+{# Dywee\EshopBundle\Resources\View\admin.html.twig #}
+
+{% extends "DyweeCoreBundle::admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success"> {{ flashMessage }} </div>
+    {% endfor %}
+
+    {% block viewBody %}
+    {% endblock viewBody %}
+{% endblock %}

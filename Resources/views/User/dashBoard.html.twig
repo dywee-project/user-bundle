@@ -1,0 +1,37 @@
+{# Dywee\UserBundle\Resources\View\User\table.html.twig #}
+
+{%  extends "DyweeUserBundle::layout.html.twig" %}
+
+{% block bodyContent %}
+
+    <h1>Bienvenue {{ app.user.firstName }} {{ app.user.lastName }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Vos commande</h2>
+                </div>
+                {% if orderList is empty %}
+                <div class="panel-body">
+                    <p>Aucune commande effectuée</p>
+                </div>
+                {% else %}
+                    non vide
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Vos paramètres</h2>
+                </div>
+                <div class="panel-body">
+                    <p>Vos adresses</p>
+                    <p>Votre profil</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

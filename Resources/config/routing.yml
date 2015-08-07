@@ -1,0 +1,21 @@
+dywee_user_table:
+    path:     /admin6833/users/table/{role}
+    defaults: { _controller: DyweeUserBundle:User:table, role: user }
+    requirements:
+        role: user|admin
+
+dywee_admin_homepage:
+    path:     /admin6833
+    defaults: { _controller: DyweeUserBundle:User:adminHomePage }
+
+dywee_admin_homepage_alias:
+    path:     /admin6833/
+    defaults: { _controller: DyweeUserBundle:User:adminHomePage }
+
+dywee_user_homepage:
+    path:     /admin
+    defaults: { _controller: DyweeUserBundle:User:homePage }
+
+dywee_user_dashboard:
+    path:     /admin/dashboard
+    defaults: { _controller: DyweeUserBundle:User:dashboard }

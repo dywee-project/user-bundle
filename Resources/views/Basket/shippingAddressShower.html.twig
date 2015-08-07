@@ -1,0 +1,25 @@
+{% if addressList is not empty %}
+    <div class="row">
+        {% for address in addressList %}
+            <div class="col-md-6">
+                <form method="post" class="fiche">
+                    <input type="hidden" name="from_user" value="true" />
+                    <input type="hidden" name="address_id" value="{{ address.id }}" />
+                    <p>{% if address.companyName != '' %}{{ address.companyName }}<br>{% endif %}
+                        {{ address.firstName }} {{ address.lastName }}<br>
+                        {{ address.email }}<br>
+                        {{ address.mobile }}</p>
+
+                    <p>{{ address.address1 }}<br>
+                        {{ address.zip }} - {{ address.cityString }}<br>
+                        {{ address.country.name }}</p>
+                    <a href="{{ path('dywee_basket_step3_with_address', {address_id: address.id}) }}" class="btn btn-default btn-block"><i class="fa fa-check"></i> Sélectionner cette addresse</a>
+                </form>
+
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Vous n'avez pas encore configuré d'adresse de facturation par défaut.</p>
+    <p><a href="{{ path('dywee_address_user_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Enregistrer une adresse de facturation</a></p>
+{% endif %}

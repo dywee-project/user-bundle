@@ -5,6 +5,7 @@ namespace Dywee\UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Dywee\UserBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
@@ -44,8 +45,22 @@ class UserController extends Controller
 
     public function homePageAction()
     {
+        /*$wr = $this->getDoctrine()->getManager()->getRepository('DyweeWebsiteBundle:Website');
+        $activeWebsite = $this->get('session')->get('activeWebsite');
+        if(!isset($activeWebsite) || !is_numeric($activeWebsite))
+        {
+            /*$ws = $wr->findByOwner($this->get('security.token_storage')->getToken()->getUser());
+            if(count($ws))
+            {
+
+            }
+            //return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
+        }*/
+
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
             return $this->redirect($this->generateUrl('dywee_admin_homepage'));
+        }
         else if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
             return $this->redirect($this->generateUrl('dywee_user_dashboard'));
         else throw AccessDeniedException('Accès limité aux membres.');
@@ -59,18 +74,53 @@ class UserController extends Controller
         return $this->render('DyweeUserBundle:User:dashBoard.html.twig', array('orderList' => $os));
     }
 
-    public function adminHomePageAction()
+    public function adminHomePageAction($websiteId = null)
     {
         $em = $this->getDoctrine()->getManager();
-        $sr = $em->getRepository('DyweeWebsiteBundle:Website');
-        $siteList = $sr->findAll();
+        $wr = $em->getRepository('DyweeWebsiteBundle:Website');
 
-        $cr = $em->getRepository('DyweeOrderBundle:BaseOrder');
-        $activeOrders = $cr->findByState(2);
+        $activeWebsite = $this->get('session')->get('activeWebsite');
 
-        $pr = $em->getRepository('DyweeProductBundle:Product');
-        $activeProducts = $pr->countByState(1);
+        $validatedWebsite = false;
 
-        return $this->render('DyweeCoreBundle:Admin:index.html.twig', array('siteList' => $siteList, 'activeOrders' => count($activeOrders), 'activeProducts' => $activeProducts));
+        if($websiteId != null)
+        {
+            $website = $wr->findOneById($websiteId);
+            if($website != null && $website->getOwner() == $this->get('security.token_storage')->getToken()->getUser()) {
+                $activeWebsite = $website;
+                $validatedWebsite = true;
+                $this->get('session')->set('activeWebsite', $activeWebsite);
+            }
+            else{
+                $this->get('session')->getFlashBag()->add('warning', 'Vous n\'avez pas accès à ce site');
+            }
+        }
+        else if(isset($activeWebsite) && is_numeric($activeWebsite))
+        {
+            $websiteToTest = $wr->findOneById($activeWebsite);
+            if($websiteToTest != null && $websiteToTest->getOwner() == $this->get('security.token_storage')->getToken()->getUser()) {
+                $validatedWebsite = true;
+            }
+        }
+
+        if($validatedWebsite)
+        {
+            $cr = $em->getRepository('DyweeOrderBundle:BaseOrder');
+            $activeOrders = $cr->findBy(array(
+                'state' => 2,
+                //'website' => $website
+            ));
+
+            $pr = $em->getRepository('DyweeProductBundle:Product');
+            $activeProducts = $pr->countByState(1, $activeWebsite);
+
+            return $this->render('DyweeWebsiteBundle:Admin:index.html.twig', array('activeOrders' => count($activeOrders), 'activeProducts' => $activeProducts));
+        }
+        else
+        {
+            $ws = $wr->findByOwner($this->get('security.token_storage')->getToken()->getUser());
+            return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
+        }
+
     }
 }

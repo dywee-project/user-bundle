@@ -5,8 +5,10 @@ dywee_user_table:
         role: user|admin
 
 dywee_admin_homepage:
-    path:     /admin6833
-    defaults: { _controller: DyweeUserBundle:User:adminHomePage }
+    path:     /admin6833/{websiteId}
+    defaults: { _controller: DyweeUserBundle:User:adminHomePage, websiteId: null }
+    requirements:
+        websiteId: \d*
 
 dywee_admin_homepage_alias:
     path:     /admin6833/

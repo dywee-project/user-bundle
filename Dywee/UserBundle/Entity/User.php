@@ -22,67 +22,31 @@ class User extends BaseUser
      */
     protected $id;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="gender", type="boolean", nullable=true)
-     */
+    /** @ORM\Column(name="gender", type="boolean", nullable=true) */
     protected $gender = 1;
 
-    /**
-     * @var text
-     *
-     * @ORM\Column(name="firstName", type="text", length=255)
-     */
+    /** @ORM\Column(name="firstName", type="text", length=255) */
     protected $firstName = '';
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="lastName", type="text", length=255)
-     */
+    /** @ORM\Column(name="lastName", type="text", length=255) */
     protected $lastName = '';
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="lastIp", type="text", length=255, nullable=true)
-     */
+    /** @ORM\Column(name="lastIp", type="text", length=255, nullable=true) */
     protected $lastIp = '';
 
-    /**
-     * @var datetime
-     *
-     * @ORM\Column(name="creationDate", type="datetime", nullable=true)
-     */
+    /** @ORM\Column(name="creationDate", type="datetime", nullable=true) */
     protected $creationDate;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=true)
-     */
+    /** @ORM\Column(name="active", type="boolean", nullable=true) */
     protected $active;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mobile", type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(name="mobile", type="string", length=255, nullable=true) */
     private $mobile;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="professionalEmal", type="string", length=255, nullable=true)
-     */
+    /** @ORM\Column(name="professionalEmal", type="string", length=255, nullable=true) */
     private $professionalEmail;
 
-    /**
-     *
-     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
-     * 
-     */
+    /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
     protected $facebookId;
 
     /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
@@ -90,14 +54,14 @@ class User extends BaseUser
 
     /** @ORM\Column(name="google_id", type="string", length=255, nullable=true) */
     protected $google_id;
-    
+
     /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
     protected $google_access_token;
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -120,7 +84,7 @@ class User extends BaseUser
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -143,7 +107,7 @@ class User extends BaseUser
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -166,7 +130,7 @@ class User extends BaseUser
     /**
      * Get lastIp
      *
-     * @return string 
+     * @return string
      */
     public function getLastIp()
     {
@@ -189,7 +153,7 @@ class User extends BaseUser
     /**
      * Get gender
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGender()
     {
@@ -212,7 +176,7 @@ class User extends BaseUser
     /**
      * Get creationDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreationDate()
     {
@@ -235,7 +199,7 @@ class User extends BaseUser
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -258,7 +222,7 @@ class User extends BaseUser
     /**
      * Get idLang
      *
-     * @return integer 
+     * @return integer
      */
     public function getIdLang()
     {
@@ -281,7 +245,7 @@ class User extends BaseUser
     /**
      * Get mobile
      *
-     * @return string 
+     * @return string
      */
     public function getMobile()
     {
@@ -304,7 +268,7 @@ class User extends BaseUser
     /**
      * Get professionalEmail
      *
-     * @return string 
+     * @return string
      */
     public function getProfessionalEmail()
     {
@@ -327,7 +291,7 @@ class User extends BaseUser
     /**
      * Get facebookId
      *
-     * @return string 
+     * @return string
      */
     public function getFacebookId()
     {
@@ -350,7 +314,7 @@ class User extends BaseUser
     /**
      * Get facebook_access_token
      *
-     * @return string 
+     * @return string
      */
     public function getFacebookAccessToken()
     {
@@ -373,7 +337,7 @@ class User extends BaseUser
     /**
      * Get google_id
      *
-     * @return string 
+     * @return string
      */
     public function getGoogleId()
     {
@@ -396,7 +360,7 @@ class User extends BaseUser
     /**
      * Get google_access_token
      *
-     * @return string 
+     * @return string
      */
     public function getGoogleAccessToken()
     {

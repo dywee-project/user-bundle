@@ -1,0 +1,7 @@
+parameters:
+    rkueny.oauth.user_provider.class: Dywee\UserBundle\OAuth\UserProvider
+
+services:
+    rkueny.oauth.user_provider:
+        class: %rkueny.oauth.user_provider.class%
+        arguments: ['@fos_user.user_manager', { facebook: facebookId }]

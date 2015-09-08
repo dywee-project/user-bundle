@@ -1,8 +1,8 @@
 {# Dywee\UserBundle\Resources\View\User\Registration\register.html.twig #}
 
-{% extends "DyweeUserBundle::layout.html.twig" %}
+{% extends "DyweeCoreBundle::login.html.twig" %}
 
-{% block fos_user_content %}
+{% block body %}
     <h1>Inscrivez-vous</h1>
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
@@ -39,4 +39,4 @@
 
     {{ form_rest(form) }}
     {{ form_end(form) }}
-{% endblock fos_user_content %}
+{% endblock body %}

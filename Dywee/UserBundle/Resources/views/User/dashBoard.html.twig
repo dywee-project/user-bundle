@@ -2,7 +2,7 @@
 
 {%  extends "DyweeUserBundle::layout.html.twig" %}
 
-{% block bodyContent %}
+{% block body %}
 
     <h1>Bienvenue {{ app.user.firstName }} {{ app.user.lastName }}</h1>
 
@@ -28,7 +28,7 @@
                 </div>
                 <div class="panel-body">
                     <p>Vos adresses</p>
-                    <p>Votre profil</p>
+                    <p><a href="{{ path('fos_user_profile_show') }}">Votre profil</a></p>
                 </div>
             </div>
         </div>

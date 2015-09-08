@@ -14,7 +14,7 @@ class UserController extends Controller
         $ur = $this->getDoctrine()->getManager()->getRepository('DyweeUserBundle:User');
         if($role == 'admin')
             $userList = $ur->findBy(array('roles' => 'ROLE_ADMIN'));
-        else $userList = $ur->findBy(array('roles' => 'ROLE_USER'));
+        else $userList = $ur->findAll();
         return $this->render('DyweeUserBundle:User:table.html.twig', array('userList' => $userList));
     }
 
@@ -45,18 +45,6 @@ class UserController extends Controller
 
     public function homePageAction()
     {
-        /*$wr = $this->getDoctrine()->getManager()->getRepository('DyweeWebsiteBundle:Website');
-        $activeWebsite = $this->get('session')->get('activeWebsite');
-        if(!isset($activeWebsite) || !is_numeric($activeWebsite))
-        {
-            /*$ws = $wr->findByOwner($this->get('security.token_storage')->getToken()->getUser());
-            if(count($ws))
-            {
-
-            }
-            //return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
-        }*/
-
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
         {
             return $this->redirect($this->generateUrl('dywee_admin_homepage'));
@@ -83,6 +71,7 @@ class UserController extends Controller
 
         $validatedWebsite = false;
 
+        //Si un site est passé en paramètre (sélectionné par l'user)
         if($websiteId != null)
         {
             $website = $wr->findOneById($websiteId);
@@ -95,11 +84,29 @@ class UserController extends Controller
                 $this->get('session')->getFlashBag()->add('warning', 'Vous n\'avez pas accès à ce site');
             }
         }
+        //Si un site est stocké en session, on vérifie quand même que l'user peut y accéder
         else if(isset($activeWebsite) && is_numeric($activeWebsite))
         {
             $websiteToTest = $wr->findOneById($activeWebsite);
             if($websiteToTest != null && $websiteToTest->getOwner() == $this->get('security.token_storage')->getToken()->getUser()) {
                 $validatedWebsite = true;
+            }
+        }
+        //Sinon on regarde dans la liste si l'user n'a qu'un site, pour le rendre directement actif
+        else {
+            $wr = $this->getDoctrine()->getManager()->getRepository('DyweeWebsiteBundle:Website');
+            $activeWebsite = $this->get('session')->get('activeWebsite');
+            if(!isset($activeWebsite) || !is_numeric($activeWebsite))
+            {
+                $ws = $wr->findByOwner($this->get('security.token_storage')->getToken()->getUser());
+                if(count($ws) == 1)
+                {
+                    $website = $ws[0];
+                    $activeWebsite = $website;
+                    $validatedWebsite = true;
+                    $this->get('session')->set('activeWebsite', $activeWebsite);
+                }
+                //return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
             }
         }
 

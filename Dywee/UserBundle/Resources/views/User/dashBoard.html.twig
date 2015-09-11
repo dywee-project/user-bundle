@@ -1,10 +1,16 @@
 {# Dywee\UserBundle\Resources\View\User\table.html.twig #}
 
-{%  extends "DyweeUserBundle::layout.html.twig" %}
+{%  extends "DyweeUserBundle::userAdmin.html.twig" %}
 
 {% block body %}
 
-    <h1>Bienvenue {{ app.user.firstName }} {{ app.user.lastName }}</h1>
+    <h1>Bienvenue
+        {% if app.user.firstName != '' and app.user.lastName != '' %}
+            {{ app.user.firstName }} {{ app.user.lastName }}
+        {% else %}
+            {{ app.user.username }}
+        {% endif %}
+    </h1>
 
     <div class="row">
         <div class="col-md-6">
@@ -27,7 +33,7 @@
                     <h2 class="panel-title">Vos paramètres</h2>
                 </div>
                 <div class="panel-body">
-                    <p>Vos adresses</p>
+                    <p><a href="{{ path('dywee_address_user_table') }}">Vos adresses</a></p>
                     <p><a href="{{ path('fos_user_profile_show') }}">Votre profil</a></p>
                 </div>
             </div>

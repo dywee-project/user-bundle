@@ -1,9 +1,22 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="fos_user_user_show">
-    <p>Nom: {{ user.lastName }}</p>
-    <p>Prénom: {{ user.firstName }}</p>
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    <p><a href="#">Modifier le profil</a></p>
-</div>
+<table class="table table-hover">
+    <tr>
+        <th>Nom</th>
+        <td>{% if user.lastName != '' %}{{ user.lastName }}{% else %}Non défini{% endif %}</td>
+    </tr>
+    <tr>
+        <th>Prénom</th>
+        <td>{% if user.firstName != '' %}{{ user.firstName }}{% else %}Non défini{% endif %}</td>
+    </tr>
+    <tr>
+        <th>{{ 'profile.show.username'|trans }}</th>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'profile.show.email'|trans }}</th>
+        <td>{{ user.email }}</td>
+    </tr>
+</table>
+
+<p><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-success"><i class="fa fa-pencil"></i> Modifier le profil</a></p>

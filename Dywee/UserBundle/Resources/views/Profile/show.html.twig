@@ -1,6 +1,10 @@
-{% extends "DyweeUserBundle::layout.html.twig" %}
+{% extends "DyweeUserBundle::userAdmin.html.twig" %}
 
-{% block body %}
-    <h1>Votre profil</h1>
-{% include "FOSUserBundle:Profile:show_content.html.twig" %}
+{% block viewBody %}
+
+    <div class="title-heading">
+        <h1>Votre profil</h1>
+    </div>
+    {% include "FOSUserBundle:Profile:show_content.html.twig" %}
+
 {% endblock %}

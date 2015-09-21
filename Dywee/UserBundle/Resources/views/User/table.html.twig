@@ -33,9 +33,9 @@
                     <td>{{ user.lastName|capitalize }}</td>
                     <td>{{ user.email }}</td>
                     <td>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if user.hasRole('ROLE_ADMIN') %}
                             <span class="label label-success">Administrateur</span>
-                        {% elseif is_granted('ROLE_ADMIN') %}
+                        {% elseif user.hasRole('ROLE_USER') %}
                             <span class="label label-default">Utilisateur</span>
                         {% else %}
                             Non reconnu
@@ -48,9 +48,10 @@
                             <span class="label label-success">Actif</span>
                         {%  endif %}
                     </td>
-                    <td> <a href="#" class="link-unstyled" target="_blank"><i class="fa fa-eye"></i> </a>
-                            <a href="#" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
-                            <a href="#" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
+                    <td>
+                        {#<a href="#" class="link-unstyled"><i class="fa fa-eye"></i> </a>#}
+                        <a href="{{ path('dywee_admin_user_edit', {id: user.id}) }}" class="link-unstyled"><i class="fa fa-pencil"></i> </a>
+                        {#<a href="#" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>#}
                         
                     </td>
                 </tr>

@@ -2,6 +2,7 @@
 
 namespace Dywee\UserBundle\Controller;
 
+use Dywee\UserBundle\Form\Type\ProfileFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Dywee\UserBundle\Entity\User;
@@ -68,6 +69,7 @@ class UserController extends Controller
         $wr = $em->getRepository('DyweeWebsiteBundle:Website');
 
         $activeWebsite = $this->get('session')->get('activeWebsite');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $validatedWebsite = false;
 
@@ -75,7 +77,7 @@ class UserController extends Controller
         if($websiteId != null)
         {
             $website = $wr->findOneById($websiteId);
-            if($website != null && $website->getOwner() == $this->get('security.token_storage')->getToken()->getUser()) {
+            if($website != null && ($website->getOwner() == $user || $website->hasContributor($user))) {
                 $activeWebsite = $website;
                 $validatedWebsite = true;
                 $this->get('session')->set('activeWebsite', $activeWebsite);
@@ -88,26 +90,21 @@ class UserController extends Controller
         else if(isset($activeWebsite) && is_numeric($activeWebsite))
         {
             $websiteToTest = $wr->findOneById($activeWebsite);
-            if($websiteToTest != null && $websiteToTest->getOwner() == $this->get('security.token_storage')->getToken()->getUser()) {
+            if($websiteToTest != null && ($websiteToTest->getOwner() == $user || $websiteToTest->hasContributor($user))) {
                 $validatedWebsite = true;
             }
         }
         //Sinon on regarde dans la liste si l'user n'a qu'un site, pour le rendre directement actif
         else {
-            $wr = $this->getDoctrine()->getManager()->getRepository('DyweeWebsiteBundle:Website');
-            $activeWebsite = $this->get('session')->get('activeWebsite');
-            if(!isset($activeWebsite) || !is_numeric($activeWebsite))
+            $ws = $wr->getFromUser($user);
+            if(count($ws) == 1)
             {
-                $ws = $wr->findByOwner($this->get('security.token_storage')->getToken()->getUser());
-                if(count($ws) == 1)
-                {
-                    $website = $ws[0];
-                    $activeWebsite = $website;
-                    $validatedWebsite = true;
-                    $this->get('session')->set('activeWebsite', $activeWebsite);
-                }
-                //return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
+                $website = $ws[0];
+                $activeWebsite = $website;
+                $validatedWebsite = true;
+                $this->get('session')->set('activeWebsite', $activeWebsite);
             }
+            //return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
         }
 
         if($validatedWebsite)
@@ -121,7 +118,18 @@ class UserController extends Controller
             $pr = $em->getRepository('DyweeProductBundle:Product');
             $activeProducts = $pr->countByState(1, $activeWebsite);
 
-            return $this->render('DyweeWebsiteBundle:Admin:index.html.twig', array('activeOrders' => count($activeOrders), 'activeProducts' => $activeProducts));
+            $ur = $em->getRepository('DyweeUserBundle:User');
+            $activeUsers = $ur->countActiveUser();
+
+            $ar = $em->getRepository('DyweeNotificationBundle:Alert');
+            $activeAlerts = $ar->countNew();
+
+            return $this->render('DyweeWebsiteBundle:Admin:index.html.twig', array(
+                'activeOrders' => count($activeOrders),
+                'activeProducts' => $activeProducts,
+                'activeUsers' => $activeUsers,
+                'activeAlerts' => $activeAlerts
+            ));
         }
         else
         {

@@ -59,14 +59,27 @@ class UserProvider extends FOSUBUserProvider
         $user = $this->userManager->createUser();
         $this->updateUserByOAuthUserResponse($user, $response);
 
+        $data = $response->getResponse();
+
+        $user->setFirstName($data['first_name']); //$response->getFirstname());
+        $user->setLastName($data['last_name']);
+        $user->setGender($data['gender']== 'male'?1:0);
+        //$user->addRole('ROLE_ADMIN');
+
         // set default values taken from OAuth sign-in provider account
         if (null !== $email = $response->getEmail()) {
             $user->setEmail($email);
+            $user->setEmailCanonical($email);
         }
 
         if (null === $this->userManager->findUserByUsername($response->getNickname())) {
             $user->setUsername($response->getNickname());
         }
+
+        /*echo '<pre>';
+        print_r($user);
+        echo '</pre>';
+        exit;*/
 
         $user->setEnabled(true);
 

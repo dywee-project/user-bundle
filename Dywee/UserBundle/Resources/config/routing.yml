@@ -21,3 +21,9 @@ dywee_user_homepage:
 dywee_user_dashboard:
     path:     /admin/dashboard
     defaults: { _controller: DyweeUserBundle:User:dashboard }
+
+dywee_admin_user_edit:
+    path:     /admin6833/user/{id}/edit
+    defaults: { _controller: DyweeUserBundle:UserAdmin:edit }
+    requirements:
+        id: \d*

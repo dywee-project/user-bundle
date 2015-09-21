@@ -1,42 +1,83 @@
 {# Dywee\UserBundle\Resources\View\User\Registration\register.html.twig #}
 
-{% extends "DyweeCoreBundle::login.html.twig" %}
+{% extends "DyweeCoreBundle::register.html.twig" %}
 
 {% block body %}
-    <h1>Inscrivez-vous</h1>
+    <p class="login-box-msg">Inscrivez-vous</p>
+
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div class="form-group">
+    <div class="form-group has-feedback">
         {{ form_label(form.firstName, "Prénom: ") }}
         {{ form_errors(form.firstName) }}
-        {{ form_widget(form.firstName) }}
+        {{ form_widget(form.firstName, {attr: {placeholder: 'Votre prénom'}}) }}
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group has-feedback">
         {{ form_label(form.lastName, "Nom: ") }}
         {{ form_errors(form.lastName) }}
-        {{ form_widget(form.lastName) }}
+        {{ form_widget(form.lastName, {attr: {placeholder: 'Votre nom'}}) }}
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group has-feedback">
         {{ form_label(form.username, "Nom d'utilisateur: ") }}
         {{ form_errors(form.username) }}
-        {{ form_widget(form.username) }}
+        {{ form_widget(form.username, {attr: {placeholder: 'Choisissez un pseudo pour la connexion'}}) }}
     </div>
 
-    <div class="form-group">
+    <div class="form-group has-feedback">
         {{ form_label(form.email, "Votre adresse e-mail: ") }}
         {{ form_errors(form.email) }}
-        {{ form_widget(form.email) }}
+        {{ form_widget(form.email, {attr: {placeholder: 'Votre adresse email'}}) }}
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
     </div>
 
     {{ form_widget(form.plainPassword) }}
 
-    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}, 'label': 'S\'inscrire'}) }}
+    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary btn-block btn-flat'}, 'label': 'S\'inscrire'}) }}
 
     {{ form_rest(form) }}
     {{ form_end(form) }}
+    {#
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="Full name">
+
+        </div>
+        <div class="form-group has-feedback">
+            <input type="email" class="form-control" placeholder="Email">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="Retype password">
+            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox"> I agree to the <a href="#">terms</a>
+                    </label>
+                </div>
+            </div><!-- /.col -->
+
+    #}
+
+    <div class="social-auth-links text-center">
+        <p>- Ou -</p>
+        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> S'inscrire avec Facebook</a>
+        {#<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using Google+</a>#}
+    </div>
+
+    <a href="{{ path('fos_user_security_login') }}" class="text-center">J'ai déjà un compte</a>
+
+
 {% endblock body %}

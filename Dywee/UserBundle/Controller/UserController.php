@@ -109,27 +109,9 @@ class UserController extends Controller
 
         if($validatedWebsite)
         {
-            $cr = $em->getRepository('DyweeOrderBundle:BaseOrder');
-            $activeOrders = $cr->findBy(array(
-                'state' => 2,
-                //'website' => $website
-            ));
 
-            $pr = $em->getRepository('DyweeProductBundle:Product');
-            $activeProducts = $pr->countByState(1, $activeWebsite);
 
-            $ur = $em->getRepository('DyweeUserBundle:User');
-            $activeUsers = $ur->countActiveUser();
-
-            $ar = $em->getRepository('DyweeNotificationBundle:Alert');
-            $activeAlerts = $ar->countNew();
-
-            return $this->render('DyweeWebsiteBundle:Admin:index.html.twig', array(
-                'activeOrders' => count($activeOrders),
-                'activeProducts' => $activeProducts,
-                'activeUsers' => $activeUsers,
-                'activeAlerts' => $activeAlerts
-            ));
+            return $this->render('DyweeWebsiteBundle:Admin:index.html.twig');
         }
         else
         {

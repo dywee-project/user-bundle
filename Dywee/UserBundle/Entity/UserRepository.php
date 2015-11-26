@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function countActiveUser()
+    public function countActiveUser($website)
     {
         $qb = $this->createQueryBuilder('u')
             ->select('count(u)')
-            ->where('u.enabled = 1');
+            ->join('u.website', 'w')
+            ->where('u.enabled = 1 and w = :website')
+            ->setParameter('website', $website);
 
         return $qb->getQuery()->getSingleScalarResult();
     }

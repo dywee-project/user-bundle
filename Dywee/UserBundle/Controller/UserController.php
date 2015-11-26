@@ -87,7 +87,7 @@ class UserController extends Controller
             }
         }
         //Si un site est stocké en session, on vérifie quand même que l'user peut y accéder
-        else if(isset($activeWebsite) && is_numeric($activeWebsite))
+        else if($activeWebsite)
         {
             $websiteToTest = $wr->findOneById($activeWebsite);
             if($websiteToTest != null && ($websiteToTest->getOwner() == $user || $websiteToTest->hasContributor($user))) {
@@ -109,8 +109,6 @@ class UserController extends Controller
 
         if($validatedWebsite)
         {
-
-
             return $this->render('DyweeWebsiteBundle:Admin:index.html.twig');
         }
         else

@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<table class="table table-hover">
+<table class="table table-bordered table-hover">
     <tr>
         <th>Nom</th>
         <td>{% if user.lastName != '' %}{{ user.lastName }}{% else %}Non défini{% endif %}</td>
@@ -19,4 +19,4 @@
     </tr>
 </table>
 
-<p><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-success"><i class="fa fa-pencil"></i> Modifier le profil</a></p>
+<p><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i> Modifier le profil</a> <a href="{{ path('fos_user_change_password') }}" class="btn btn-default"><i class="fa fa-unlock-alt"></i> Changer le mot de passe</a></p>

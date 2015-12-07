@@ -113,8 +113,7 @@ class UserController extends Controller
         }
         else
         {
-            $ws = $wr->findByOwner($this->get('security.token_storage')->getToken()->getUser());
-            return $this->render('DyweeWebsiteBundle:Website:list.html.twig', array('websiteList' => $ws));
+            return $this->forward('DyweeWebsiteBundle:Website:displayAll');
         }
 
     }

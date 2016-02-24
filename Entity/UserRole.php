@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * UserRole
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\UserBundle\Entity\UserRoleRepository")
+ * @ORM\Entity(repositoryClass="Dywee\UserBundle\Repository\UserRoleRepository")
  */
 class UserRole
 {

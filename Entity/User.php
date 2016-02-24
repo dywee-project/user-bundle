@@ -9,7 +9,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * User
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="Dywee\UserBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Dywee\UserBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {

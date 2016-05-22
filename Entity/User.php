@@ -58,8 +58,6 @@ class User extends BaseUser
     /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
     protected $google_access_token;
 
-    /** @ORM\ManyToMany(targetEntity="Dywee\WebsiteBundle\Entity\Website") */
-    protected $website;
 
     /**
      * Get id

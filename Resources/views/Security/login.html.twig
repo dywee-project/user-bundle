@@ -11,6 +11,7 @@
 
     <p class="h2">Vos identifiants</p>
     <form action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         <div class="form-group has-feedback">
             <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
             <span class="glyphicon glyphicon-user form-control-feedback"></span>

@@ -22,7 +22,7 @@ class User extends BaseUser
      */
     protected $id;
 
-    /** @ORM\Column(name="gender", type="boolean", nullable=true) */
+    /** @ORM\Column(name="gender", type="smallint", nullable=true) */
     protected $gender = 1;
 
     /** @ORM\Column(name="firstName", type="text", length=255) */
@@ -205,29 +205,6 @@ class User extends BaseUser
     public function getActive()
     {
         return $this->active;
-    }
-
-    /**
-     * Set idLang
-     *
-     * @param integer $idLang
-     * @return User
-     */
-    public function setIdLang($idLang)
-    {
-        $this->idLang = $idLang;
-
-        return $this;
-    }
-
-    /**
-     * Get idLang
-     *
-     * @return integer
-     */
-    public function getIdLang()
-    {
-        return $this->idLang;
     }
 
     /**

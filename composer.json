@@ -1,7 +1,7 @@
 {
   "name": "dywee/user-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony2 bundle for easy management of user",
+  "description": "Symfony3 bundle for easy management of user",
   "keywords": ["user"],
   "license": "MIT",
   "authors": [

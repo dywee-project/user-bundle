@@ -11,10 +11,13 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Dywee\UserBundle\Repository\UserRepository")
  */
-class User extends BaseUser
+class User extends BaseUser implements UserInterface
 {
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,7 +26,7 @@ class User extends BaseUser
     protected $id;
 
     /** @ORM\Column(name="gender", type="smallint", nullable=true) */
-    protected $gender = 1;
+    protected $gender;
 
     /** @ORM\Column(name="firstName", type="text", length=255) */
     protected $firstName = '';
@@ -34,46 +37,11 @@ class User extends BaseUser
     /** @ORM\Column(name="lastIp", type="text", length=255, nullable=true) */
     protected $lastIp = '';
 
-    /** @ORM\Column(name="creationDate", type="datetime", nullable=true) */
-    protected $creationDate;
-
-    /** @ORM\Column(name="active", type="boolean", nullable=true) */
-    protected $active;
-
-    /** @ORM\Column(name="mobile", type="string", length=255, nullable=true) */
-    private $mobile;
-
-    /** @ORM\Column(name="professionalEmal", type="string", length=255, nullable=true) */
-    private $professionalEmail;
-
-    /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
-    protected $facebookId;
-
-    /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
-    protected $facebook_access_token;
-
-    /** @ORM\Column(name="google_id", type="string", length=255, nullable=true) */
-    protected $google_id;
-
-    /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
-    protected $google_access_token;
-
+    /** @ORM\Column(name="createdAt", type="datetime", nullable=true) */
+    protected $createdAt;
 
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     * @return User
+     * @inheritdoc
      */
     public function setFirstName($firstName)
     {
@@ -83,9 +51,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get firstName
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getFirstName()
     {
@@ -93,10 +59,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set lastName
-     *
-     * @param string $lastName
-     * @return User
+     * @inheritdoc
      */
     public function setLastName($lastName)
     {
@@ -106,9 +69,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get lastName
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getLastName()
     {
@@ -116,10 +77,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set lastIp
-     *
-     * @param string $lastIp
-     * @return User
+     * @inheritdoc
      */
     public function setLastIp($lastIp)
     {
@@ -129,9 +87,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get lastIp
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getLastIp()
     {
@@ -139,10 +95,7 @@ class User extends BaseUser
     }
 
     /**
-     * Set gender
-     *
-     * @param boolean $gender
-     * @return User
+     * @inheritdoc
      */
     public function setGender($gender)
     {
@@ -152,9 +105,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get gender
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function getGender()
     {
@@ -166,185 +117,45 @@ class User extends BaseUser
      *
      * @param \DateTime $creationDate
      * @return User
+     * @deprecated
      */
     public function setCreationDate($creationDate)
     {
-        $this->creationDate = $creationDate;
-
-        return $this;
+        return $this->setCreatedAt($creationDate);
     }
 
     /**
      * Get creationDate
      *
      * @return \DateTime
+     * @deprecated
      */
     public function getCreationDate()
     {
-        return $this->creationDate;
+        return $this->getCreatedAt();
     }
 
     /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return User
+     * @inheritdoc
      */
-    public function setActive($active)
+    public function setCreatedAt(\DateTime $date)
     {
-        $this->active = $active;
+        $this->createdAt = $date;
 
         return $this;
     }
 
     /**
-     * Get active
-     *
-     * @return boolean
+     * @inheritdoc
      */
-    public function getActive()
+    public function getCreatedAt()
     {
-        return $this->active;
+        return $this->createdAt;
     }
 
     /**
-     * Set mobile
-     *
-     * @param string $mobile
-     * @return User
+     * @inheritdoc
      */
-    public function setMobile($mobile)
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
-    /**
-     * Get mobile
-     *
-     * @return string
-     */
-    public function getMobile()
-    {
-        return $this->mobile;
-    }
-
-    /**
-     * Set professionalEmail
-     *
-     * @param string $professionalEmail
-     * @return User
-     */
-    public function setProfessionalEmail($professionalEmail)
-    {
-        $this->professionalEmail = $professionalEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get professionalEmail
-     *
-     * @return string
-     */
-    public function getProfessionalEmail()
-    {
-        return $this->professionalEmail;
-    }
-
-    /**
-     * Set facebookId
-     *
-     * @param string $facebookId
-     * @return User
-     */
-    public function setFacebookId($facebookId)
-    {
-        $this->facebookId = $facebookId;
-
-        return $this;
-    }
-
-    /**
-     * Get facebookId
-     *
-     * @return string
-     */
-    public function getFacebookId()
-    {
-        return $this->facebookId;
-    }
-
-    /**
-     * Set facebook_access_token
-     *
-     * @param string $facebookAccessToken
-     * @return User
-     */
-    public function setFacebookAccessToken($facebookAccessToken)
-    {
-        $this->facebook_access_token = $facebookAccessToken;
-
-        return $this;
-    }
-
-    /**
-     * Get facebook_access_token
-     *
-     * @return string
-     */
-    public function getFacebookAccessToken()
-    {
-        return $this->facebook_access_token;
-    }
-
-    /**
-     * Set google_id
-     *
-     * @param string $googleId
-     * @return User
-     */
-    public function setGoogleId($googleId)
-    {
-        $this->google_id = $googleId;
-
-        return $this;
-    }
-
-    /**
-     * Get google_id
-     *
-     * @return string
-     */
-    public function getGoogleId()
-    {
-        return $this->google_id;
-    }
-
-    /**
-     * Set google_access_token
-     *
-     * @param string $googleAccessToken
-     * @return User
-     */
-    public function setGoogleAccessToken($googleAccessToken)
-    {
-        $this->google_access_token = $googleAccessToken;
-
-        return $this;
-    }
-
-    /**
-     * Get google_access_token
-     *
-     * @return string
-     */
-    public function getGoogleAccessToken()
-    {
-        return $this->google_access_token;
-    }
-
     public function getName($order = 'first')
     {
         return $this->getFirstName().' '.$this->getLastName();

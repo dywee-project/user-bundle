@@ -8,6 +8,6 @@ class DyweeUserBundle extends Bundle
 {
     public function getParent()
     {
-        return 'FOSUserBundle';
+        return '';
     }
 }

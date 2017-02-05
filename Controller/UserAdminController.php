@@ -2,15 +2,14 @@
 
 namespace Dywee\UserBundle\Controller;
 
+use Dywee\UserBundle\Entity\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Dywee\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Dywee\UserBundle\Form\Type\ProfileFormType;
 
 class UserAdminController extends Controller
 {
-    public function editAction(User $user, Request $request)
+    public function editAction(UserInterface $user, Request $request)
     {
         $form = $this->get('form.factory')->create(new ProfileFormType(), $user);
 
